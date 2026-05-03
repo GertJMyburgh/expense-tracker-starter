@@ -16,11 +16,20 @@ There is no test runner configured.
 
 This is the **starter** project for Mosh's Claude Code course (see README). It is intentionally shipped with bugs, poor UI, and messy code that the course refactors over time. Do not assume existing patterns are good — they are the starting point for refactoring exercises.
 
-A known intentional bug: in `src/App.jsx`, transaction `amount` values are stored as strings (e.g. `"5000"`) but the income/expense totals use `reduce((sum, t) => sum + t.amount, 0)`, which produces string concatenation rather than numeric addition. Be aware before "fixing" totals — confirm with the user whether the lesson intends to fix it now.
+The original intentional string-amount bug has already been fixed: seed amounts in `src/App.jsx` are numbers and the form coerces input via `Number(amount)`, so the income/expense `reduce` calls now sum numerically.
 
 ## Architecture
 
-Single-page React 19 app built with Vite. The entire application lives in **one component**: `src/App.jsx`. Everything — transaction state, form inputs, filter state, derived totals, and the rendered UI — is in that file using `useState`. There is no backend, no persistence (state resets on page reload), no routing, and no component decomposition yet.
+Single-page React 19 app built with Vite. There is no backend, no persistence (state resets on page reload), and no routing.
+
+Component layout (after the course's first round of decomposition):
+
+- `src/App.jsx` — owns the `transactions` state and the `categories` list, defines the `handleAdd` callback (assigns `id` and `date`, then appends), and composes the three child components.
+- `src/components/Summary.jsx` — receives `transactions`, derives `totalIncome` / `totalExpenses` / `balance` internally, renders the three summary cards.
+- `src/components/TransactionForm.jsx` — owns its own form state (`description`, `amount`, `type`, `category`), validates non-empty description+amount, and calls `onAdd({ description, amount: Number(amount), type, category })`. Receives `categories` for the category select.
+- `src/components/TransactionList.jsx` — owns its own filter state (`filterType`, `filterCategory`); filters are local because they only affect the list. Receives `transactions` and `categories`.
+
+Data flow is one-way: `App` holds the source-of-truth list, child components either receive data via props or call back via `onAdd`. Form state and filter state are deliberately co-located with the components that use them rather than lifted into `App`.
 
 Entry chain: `index.html` → `src/main.jsx` (mounts `<App />` in StrictMode) → `src/App.jsx`. Styles are split between `src/index.css` (global) and `src/App.css` (app-scoped).
 
