@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(npm install *)",
+      "PowerShell(npm run *)",
+      "PowerShell(Get-Command *)",
+      "PowerShell(winget install *)",
+      "PowerShell($env:NVM_HOME = \"C:\\\\Users\\\\GertMyburgh\\\\AppData\\\\Local\\\\nvm\"; $env:NVM_SYMLINK = \"C:\\\\nvm4w\\\\nodejs\"; & \"$env:NVM_HOME\\\\nvm.exe\" use 22.22.2)",
+      "PowerShell($env:PATH = \"C:\\\\nvm4w\\\\nodejs;\" + $env:PATH; & \"C:\\\\nvm4w\\\\nodejs\\\\npm.cmd\" -v)",
+      "PowerShell($env:PATH = \"C:\\\\nvm4w\\\\nodejs;\" + $env:PATH; & \"C:\\\\nvm4w\\\\nodejs\\\\npm.cmd\" run dev)",
+      "PowerShell($env:PATH = \"C:\\\\Program Files\\\\Git\\\\cmd;\" + $env:PATH; git status; Write-Host \"---\"; git diff --stat HEAD 2>&1; Write-Host \"---log---\"; git log --oneline -5 2>&1)",
+      "PowerShell(git status *)",
+      "PowerShell(& \"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" auth status 2>&1 | Out-String)",
+      "PowerShell(git remote *)",
+      "PowerShell($env:PATH = \"C:\\\\Program Files\\\\Git\\\\cmd;C:\\\\Program Files\\\\GitHub CLI;\" + $env:PATH; gh repo view GertJMyburgh/expense-tracker-starter --json name,url,visibility,isEmpty,defaultBranchRef,pushedAt,description 2>&1 | Out-String)",
+      "PowerShell(git *)",
+      "Bash(npm run *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}
