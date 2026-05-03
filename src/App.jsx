@@ -15,23 +15,12 @@ function App() {
 
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
-  const [type, setType] = useState("expense");
-  
+  const [type, setType] = useState("expense");  
   const [category, setCategory] = useState("food");
   const [filterType, setFilterType] = useState("all");
   const [filterCategory, setFilterCategory] = useState("all");
 
   const categories = ["food", "housing", "utilities", "transport", "entertainment", "salary", "other"];
-
-  const totalIncome = transactions
-    .filter(t => t.type === "income")
-    .reduce((sum, t) => sum + t.amount, 0);
-
-  const totalExpenses = transactions
-    .filter(t => t.type === "expense")
-    .reduce((sum, t) => sum + t.amount, 0);
-
-  const balance = totalIncome - totalExpenses;
 
   let filteredTransactions = transactions;
   if (filterType !== "all") {
